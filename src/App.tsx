@@ -6,23 +6,26 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import HomePage from './page/home'
 import ProductPage from './page/product'
 import Info from './page/info'
+import Signup from './page/signup'
+import Signin from './page/signin'
 
 function App() {
   return (
   <div className='container'>
-    <header>
+    {/* <header>
       <ul>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/product">Product</NavLink></li>
         <li><NavLink to="/user">Users</NavLink></li>
       </ul>
-    </header>
+    </header> */}
     <main>
       <Routes>
         <Route path='/' element={<HomePage />} ></Route>
         <Route path='product' element={<ProductPage />} ></Route>
-        <Route path='user' element={`UserPage`} ></Route>
         <Route path='blog' element={<Info />} ></Route>
+        <Route path='signup' element={<Signup />} ></Route>
+        <Route path='signin' element={<Signin />} ></Route>
       </Routes>
     </main>
   </div>

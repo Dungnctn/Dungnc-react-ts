@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import Nav from './nav'
 
 type Props = {}
@@ -25,8 +26,8 @@ const Header = (props: Props ) => {
                 
                     
                 <div  className="float-right login">
-                    <a href="/#/signin">Đăng Nhập</a> | 
-                    <a href="/#/signup">Đăng Ký</a> 
+                    <NavLink to="/signin">Đăng Nhập</NavLink> | 
+                    <NavLink to="/signup">Đăng Ký</NavLink>
                 </div>
                 {/* <div  className="float-right acc hidden">
                         <span id="username"></span> | 
