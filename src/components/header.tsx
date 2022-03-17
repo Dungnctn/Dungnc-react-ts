@@ -39,7 +39,7 @@ const Header = (props: Props ) => {
                     
                 </div>
             </div>
-            <Nav />
+            
         </header>
   )
 }

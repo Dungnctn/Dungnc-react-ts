@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import ShowInfo from './components/ShowInfo'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import HomePage from './page/home'
 import ProductPage from './page/product'
 import Info from './page/info'
 import Signup from './page/signup'
 import Signin from './page/signin'
+import WebsitePage from './page/layouts/websitepage'
+import Header from './components/header'
+import AdminPage from './page/layouts/adminpage'
+import BorderNew from './page/borderNew'
 
 function App() {
   return (
@@ -21,11 +24,29 @@ function App() {
     </header> */}
     <main>
       <Routes>
-        <Route path='/' element={<HomePage />} ></Route>
+        <Route path='/' element={<WebsitePage />} >
+          <Route path='/' element={<HomePage />} >
+            <Route index element={<h3>Product</h3>} />
+            <Route path='/size' element={<h3>Size getAll</h3>} />
+            <Route path="/color" element={<h3>Color</h3>} />
+          </Route>
+          <Route path='blog' element={<Info />} />
+        </Route>
+
+    <Route path='pro' element={<ProductPage />} />
+
+        <Route path='signin' element={<Signin />} />
+        <Route path='signup' element={<Signup />} ></Route>
+
+
+        <Route path='admin' element={<AdminPage />} >
+          <Route index element={<Navigate to='dashboard' />} />
+          <Route path='dashboard' element={<h2>Dashboard</h2>} />
+        </Route>
+        {/* <Route path='/' element={<HomePage />} ></Route>
         <Route path='product' element={<ProductPage />} ></Route>
         <Route path='blog' element={<Info />} ></Route>
-        <Route path='signup' element={<Signup />} ></Route>
-        <Route path='signin' element={<Signin />} ></Route>
+        <Route path='signin' element={<Signin />} ></Route> */}
       </Routes>
     </main>
   </div>

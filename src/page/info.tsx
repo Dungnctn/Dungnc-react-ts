@@ -6,7 +6,6 @@ type Props = {}
 const Info = (props: Props) => {
   return (
       <div>
-        <Header />
       
       <div className="max-w-7xl mx-auto mb-20">
             <ol role="list" className="bg-[#F1F1F1] max-w-2xl mt-10 mx-auto px-4 py-2 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8">

@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import Nav from "../components/nav";
@@ -10,10 +11,8 @@ type Props = {}
 const HomePage = (props: Props ) => {
     return (
         <div>
-            <Header />
             <Slide />
             <BorderNew />
-            <Footer />
         </div>
     )
 }

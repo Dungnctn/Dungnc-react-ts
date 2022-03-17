@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 type Props = {}
 
@@ -474,7 +475,7 @@ const BorderNew = (props: Props) => {
                 <div className="lg:col-span-3">
                   <div className=" rounded-lg h-96 lg:h-full">
                     
-                    
+                    <Outlet />
                     
                   </div>
                   
