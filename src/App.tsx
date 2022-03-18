@@ -12,6 +12,7 @@ import Header from './components/header'
 import AdminPage from './page/layouts/adminpage'
 import BorderNew from './page/borderNew'
 import DetailPage from './page/detailPage'
+import Category from './page/adminmanger.tsx/category'
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
         <Route path='admin' element={<AdminPage />} >
           <Route index element={<Navigate to='dashboard' />} />
           <Route path='dashboard' element={<h2>Dashboard</h2>} />
+          <Route path='category' element={<Category />} />
+          <Route path='categoryedit/:id' element={<h3>Edit Category</h3>} />
         </Route>
         {/* <Route path='/' element={<HomePage />} ></Route>
         <Route path='product' element={<ProductPage />} ></Route>
