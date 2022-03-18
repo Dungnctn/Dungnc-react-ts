@@ -14,21 +14,23 @@ const Category = (props: Props) => {
             setCates(getCate.data)
         }
         
-        
         getCategory()
-        // return (
-            //     () => setCates(cates)
-            // )
             
         }, [])
     
     const handleRemove = async (id: number)  => {
-        await axios.delete('http://localhost:3001/api/category/'+id);
+        const confirm = window.confirm("Ban co muon xoa danh muc")
+        if(confirm) {
+            await axios.delete('http://localhost:3001/api/category/'+id);
+            window.location.href = 'http://localhost:3000/admin/category'
+        }
     }
 
+
   return (
-    <div>
-        <table className="table">
+      <div>
+        <NavLink to={"/admin/addcategory"} className="bg-green-500">Them danh muc ++</NavLink>
+        <table className="table mt-10">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -40,7 +42,7 @@ const Category = (props: Props) => {
             </thead>
             <tbody>
                 {cates?.map((item, index) => 
-                    <tr>
+                    <tr key={index}>
                         <th scope="row">{index+1}</th>
                         <td>{item.name}</td>
                         <td>{item.createdAt}</td>

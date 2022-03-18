@@ -16,10 +16,9 @@ const Signup = (props: Props) => {
             username, email, password
         }
         // console.log(user);
-        const formUser = await axios.post('http://localhost:3001/api/user', user);
-        if(formUser){
-            <Route path='http://localhost:3000' element={<HomePage />} />
-        }
+        await axios.post('http://localhost:3001/api/user', user);
+        const alert = window.alert("Them user thanh cong");
+        
     }
 
 
