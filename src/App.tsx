@@ -11,6 +11,7 @@ import WebsitePage from './page/layouts/websitepage'
 import Header from './components/header'
 import AdminPage from './page/layouts/adminpage'
 import BorderNew from './page/borderNew'
+import DetailPage from './page/detailPage'
 
 function App() {
   return (
@@ -25,11 +26,14 @@ function App() {
     <main>
       <Routes>
         <Route path='/' element={<WebsitePage />} >
+
           <Route path='/' element={<HomePage />} >
-            <Route index element={<h3>Product</h3>} />
+            <Route index element={<ProductPage />} />
             <Route path='/size' element={<h3>Size getAll</h3>} />
             <Route path="/color" element={<h3>Color</h3>} />
           </Route>
+
+          <Route path='productdetail/:id' element={<DetailPage />} />
           <Route path='blog' element={<Info />} />
         </Route>
 
