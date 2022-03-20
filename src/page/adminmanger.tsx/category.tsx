@@ -1,28 +1,29 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom';
-import { cateType } from '../../type/categoryType';
+import { getAll, remove } from '../../api/category';
+import { cateDetailType } from '../../type/categoryType';
 
 type Props = {}
 
 const Category = (props: Props) => {
-    const [cates, setCates] = useState<cateType>();
+    const [cates, setCates] = useState<cateDetailType[]>();
 
     useEffect(() => {
         const getCategory = async () => {
-            const getCate = await axios.get('http://localhost:3001/api/category');
+            const getCate = await getAll();
             setCates(getCate.data)
         }
         
-        getCategory()
-            
+        getCategory();
+
         }, [])
     
-    const handleRemove = async (id: number)  => {
+    const handleRemove = async (id: any)  => {
         const confirm = window.confirm("Ban co muon xoa danh muc")
         if(confirm) {
-            await axios.delete('http://localhost:3001/api/category/'+id);
-            window.location.href = 'http://localhost:3000/admin/category'
+            await remove(id);
+            setCates(cates?.filter(item => item._id !== id));
         }
     }
 
@@ -47,8 +48,8 @@ const Category = (props: Props) => {
                         <td>{item.name}</td>
                         <td>{item.createdAt}</td>
                         <td>{item.updatedAt}</td>
-                        <td><NavLink to={"/admin/categoryedit/"+item._id}>Update</NavLink></td>
-                        <td><button className='text-red-400' type='button' onClick={() => handleRemove(item._id)} >Delete</button></td>
+                        <td><NavLink to={"/admin/categoryedit/"+item._id}><span className='text-green-400'>Update</span></NavLink></td>
+                        <td><button className='text-red-400 text-base' type='button' onClick={() => handleRemove(item._id)} >Delete</button></td>
                     </tr>
                 )}
             </tbody>

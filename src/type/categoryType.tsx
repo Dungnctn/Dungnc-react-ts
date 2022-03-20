@@ -1,10 +1,6 @@
 export type cateDetailType = {
     _id: number,
-    name: string,
+    name: String,
     createdAt: Date,
     updatedAt: Date
 }
-
-export type cateType = [
-    cateDetailType
-]

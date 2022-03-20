@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import HomePage from './page/home'
@@ -8,15 +6,23 @@ import Info from './page/info'
 import Signup from './page/signup'
 import Signin from './page/signin'
 import WebsitePage from './page/layouts/websitepage'
-import Header from './components/header'
 import AdminPage from './page/layouts/adminpage'
-import BorderNew from './page/borderNew'
 import DetailPage from './page/detailPage'
 import Category from './page/adminmanger.tsx/category'
 import AddCategory from './page/adminmanger.tsx/addcategory'
 import UpdateCategory from './page/adminmanger.tsx/updatecategory'
+import { add } from './api/category'
+import { useState } from 'react'
+import { cateDetailType } from './type/categoryType'
 
 function App() {
+  const [category, setCategory] = useState<cateDetailType[]>([])
+
+  const onHanldeAdd = (data: any) => {
+    add(data)
+    setCategory([...category, data]);
+  }
+
   return (
   <div className='container'>
     {/* <header>
@@ -51,7 +57,7 @@ function App() {
           <Route path='dashboard' element={<h2>Dashboard</h2>} />
           <Route path='category' element={<Category />} />
           <Route path='categoryedit/:id' element={<UpdateCategory />} />
-          <Route path='addcategory' element={<AddCategory />} />
+          <Route path='addcategory' element={<AddCategory onAdd={onHanldeAdd} />} />
         </Route>
         {/* <Route path='/' element={<HomePage />} ></Route>
         <Route path='product' element={<ProductPage />} ></Route>

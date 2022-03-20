@@ -19,14 +19,16 @@ console.log(name);
         getCategory()
     }, [])
 
-    const handlSubmit = async () => {
+    const handlSubmit = async (id:any) => {
         const categoryUpdate = {
             name: name
         }
         
         await axios.put("http://localhost:3001/api/category/"+id, categoryUpdate);
         window.location.href = 'http://localhost:3000/admin/category';
-        alert('Cap nhat danh muc thanh cong'+categoryUpdate);
+        
+        alert('Cap nhat danh muc thanh cong');
+        console.log(id);
     }
 
   return (
@@ -36,7 +38,7 @@ console.log(name);
                 <label className="form-label">Name Category</label>
                 <input type="text" value={name?.name} onChange={(e:any) => setCate(e.target.value) } className="form-control" required/>
             </div>
-            <button type="submit" onClick={handlSubmit} className="btn btn-primary">Submit</button>
+            <button type="submit" onClick={() => handlSubmit(id)} className="btn btn-primary">Submit</button>
         </form>
     </div>
   )
