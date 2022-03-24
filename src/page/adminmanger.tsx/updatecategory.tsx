@@ -1,45 +1,46 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { appendErrors, SubmitHandler, useForm } from 'react-hook-form';
+import { useParams, useNavigate } from 'react-router-dom'
+import { get } from '../../api/category';
 import { cateDetailType } from '../../type/categoryType';
 
-type Props = {}
+type UpdateCategoryProps = {
+    onEdit: (category: cateDetailType) => void
+}
+type FormInput = {
+    name: string
+}
 
-const UpdateCategory = (props: Props) => {
-    const {id} = useParams();
-    console.log(id);
-    const [name, setCate] = useState<cateDetailType>();
-console.log(name);
+const UpdateCategory = (props: UpdateCategoryProps) => {
+    const navigate = useNavigate()
+    const {id}:any = useParams();
+    const {register, handleSubmit, reset } = useForm<FormInput>();
 
     useEffect(() => {
         const getCategory = async () => {
-            const response = await axios.get("http://localhost:3001/api/category/"+id);
-            setCate(response.data)
+            const {data} = await get(id);
+            reset(data)
         }
         getCategory()
     }, [])
 
-    const handlSubmit = async (id:any) => {
-        const categoryUpdate = {
-            name: name
-        }
-        
-        await axios.put("http://localhost:3001/api/category/"+id, categoryUpdate);
-        window.location.href = 'http://localhost:3000/admin/category';
-        
-        alert('Cap nhat danh muc thanh cong');
-        console.log(id);
+    const onUpdate: SubmitHandler<FormInput> = ( data:any ) => {
+        console.log(data);
+        props.onEdit(data);
+        navigate("/admin/category");
     }
 
   return (
-    <div>
-        <form method='POST'>
-            <div className="mb-3">
-                <label className="form-label">Name Category</label>
-                <input type="text" value={name?.name} onChange={(e:any) => setCate(e.target.value) } className="form-control" required/>
-            </div>
-            <button type="submit" onClick={() => handlSubmit(id)} className="btn btn-primary">Submit</button>
-        </form>
+    <div> 
+            <form onSubmit={handleSubmit(onUpdate)}>
+                <div className="mb-3">
+                    <label className="form-label">Name Category</label>
+                    <input type="text" {...register("name")}  className="form-control"/>
+                    {/* { errors.name && <span>Khong duoc bo trong</span> } */}
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
     </div>
   )
 }

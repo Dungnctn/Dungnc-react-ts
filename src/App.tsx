@@ -11,27 +11,54 @@ import DetailPage from './page/detailPage'
 import Category from './page/adminmanger.tsx/category'
 import AddCategory from './page/adminmanger.tsx/addcategory'
 import UpdateCategory from './page/adminmanger.tsx/updatecategory'
-import { add } from './api/category'
-import { useState } from 'react'
+import { add, get, getAll, remove, update } from './api/category';
+import {getAll} from './api/product'
+import { useEffect, useState } from 'react'
 import { cateDetailType } from './type/categoryType'
+import Product from './page/adminmanger.tsx/product'
+import { productDetailType } from './type/productType'
 
 function App() {
-  const [category, setCategory] = useState<cateDetailType[]>([])
+  const [category, setCategory] = useState<cateDetailType[]>([]);
+  const [products, setProducts] = useState<productDetailType[]>([]);
 
-  const onHanldeAdd = (data: any) => {
-    add(data)
-    setCategory([...category, data]);
+  useEffect(() => {
+    const getCategory = async () => {
+      const {data} = await getAll();
+      setCategory(data);
+    }
+    getCategory()
+  }, [])
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const {data} = await getAll();
+      setCategory(data);
+    }
+    getProduct()
+  }, [])
+
+  const handleRemove= async (id: number) => {
+    const alert = window.confirm("Ban co muon xoa danh muc");
+    if(alert){
+      await remove(id)
+      setCategory(category.filter(item => item._id !== id))
+    }
+  }
+
+  const onHanldeAdd = async (cate: any) => {
+    const {data} = await add(cate)
+    setCategory([...category, data])
+  }
+
+  const onHanldeEdit = async (product: any) => {
+    const {data} = await update(product);
+    
+    setCategory(category.map(item => data._id == item._id ? data : item ))
   }
 
   return (
   <div className='container'>
-    {/* <header>
-      <ul>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/product">Product</NavLink></li>
-        <li><NavLink to="/user">Users</NavLink></li>
-      </ul>
-    </header> */}
     <main>
       <Routes>
         <Route path='/' element={<WebsitePage />} >
@@ -55,40 +82,21 @@ function App() {
         <Route path='admin' element={<AdminPage />} >
           <Route index element={<Navigate to='dashboard' />} />
           <Route path='dashboard' element={<h2>Dashboard</h2>} />
-          <Route path='category' element={<Category />} />
-          <Route path='categoryedit/:id' element={<UpdateCategory />} />
-          <Route path='addcategory' element={<AddCategory onAdd={onHanldeAdd} />} />
+          <Route path='category'>
+            <Route index  element={<Category category={category} onRemove={handleRemove} />}  />
+            <Route path=':id/edit' element={<UpdateCategory onEdit={onHanldeEdit} />} />
+            <Route path='add' element={<AddCategory onAdd={onHanldeAdd} />} />
+          </Route>
+
+          <Route path='product'>
+            <Route index element={<Product products={product} />} />
+          </Route>
+
         </Route>
-        {/* <Route path='/' element={<HomePage />} ></Route>
-        <Route path='product' element={<ProductPage />} ></Route>
-        <Route path='blog' element={<Info />} ></Route>
-        <Route path='signin' element={<Signin />} ></Route> */}
       </Routes>
     </main>
   </div>
   )
-  
-  // const [info, setInfo] = useState({
-  //   name: "A",
-  //   age: 20,
-  // })
-  // const [pro, setPro] = useState([
-  //   {id: 1, name: "Dung"},
-  //   {id: 2, name: "Chi"},
-  //   {id: 3, name: "Nguyen"},
-  // ])
-  // // const handleInfo = () => {
-  // //   console.log(setInfo({...info}));
-  // // }
-
-  // return (
-  //   <div className='App'>
-  //     Info: {info.name}
-  //     Pro: {pro.map(item => <div>{item.id} - {item.name}</div>)}
-  //     <button onClick={handleInfo}>Them ele</button>
-  //     <ShowInfo name="Dũng" />
-  //   </div>
-  // )
 }
 
 export default App

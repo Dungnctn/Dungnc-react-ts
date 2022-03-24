@@ -13,7 +13,7 @@ type FormInput = {
 }
 
 const AddCategory = (props: categoryProps) => {
-    const {register, handleSubmit, formState} = useForm<FormInput>()
+    const { register, handleSubmit } = useForm<FormInput>()
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<FormInput> = (data: any) => {

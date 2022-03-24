@@ -8,6 +8,7 @@ export const getAll = () => {
 
 export const get = (id: number) => {
     const url = `/category/${id}`
+    return instance.get(url);
 }
 
 export const remove = (id: number) => {
@@ -18,4 +19,9 @@ export const remove = (id: number) => {
 export const add = (category: cateDetailType) => {
     const url = `/category`;
     return instance.post(url, category);
+}
+
+export const update = (category: cateDetailType) => {
+    const url = `/category/${category._id}`;
+    return instance.put(url, category);
 }
