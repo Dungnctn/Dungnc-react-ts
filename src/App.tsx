@@ -12,7 +12,7 @@ import Category from './page/adminmanger.tsx/category';
 import AddCategory from './page/adminmanger.tsx/addcategory';
 import UpdateCategory from './page/adminmanger.tsx/updatecategory';
 import { add, get, getAll, remove, update } from './api/category';
-import {getAllProduct, removeProduct } from './api/product';
+import {getAllProduct, removeProduct, updateProduct } from './api/product';
 import { useEffect, useState } from 'react';
 import { cateDetailType } from './type/categoryType';
 import Product from './page/adminmanger.tsx/product';
@@ -20,6 +20,7 @@ import { productDetailType } from './type/productType';
 import { addProduct } from './api/product';
 import PrivateRouter from "./components/PrivateRouter"
 import ProductAdd from './page/adminmanger.tsx/ProductAdd';
+import ProductEdit from './page/adminmanger.tsx/ProductEdit';
 
 function App() {
   const [category, setCategory] = useState<cateDetailType[]>([]);
@@ -54,10 +55,10 @@ function App() {
     setCategory([...category, data])
   }
 
-  const onHanldeEdit = async (product: any) => {
-    const {data} = await update(product);
+  const onHanldeEdit = async (cate: any) => {
+    const {data} = await update(cate);
     
-    setCategory(category.map(item => data._id == item._id ? data : item ))
+    setCategory(category.map(ite => data._id == ite._id ? data : ite ))
   }
 
   const handleRemoveProduct = async (id: number) => {
@@ -71,6 +72,11 @@ function App() {
   const handleAddProduct = async (product: any) => {
     const {data} = await addProduct(product)
     setProducts([...products, data])
+  }
+
+  const handleEditProduct = async (product: any) => {
+    const {data} = await updateProduct(product)
+    setProducts(products.map(item => item._id == data._id ? data : item))
   }
 
   return (
@@ -98,7 +104,7 @@ function App() {
           <Route index element={<Navigate to='dashboard' />} />
           <Route path='dashboard' element={<h2>Dashboard</h2>} />
           <Route path='category'>
-            <Route index  element={<Category category={category} onRemove={handleRemove} />}  />
+            <Route index  element={<Category category={category} onRemove={handleRemove} /> }/>
             <Route path=':id/edit' element={<UpdateCategory onEdit={onHanldeEdit} />} />
             <Route path='add' element={<AddCategory onAdd={onHanldeAdd} />} />
           </Route>
@@ -106,6 +112,7 @@ function App() {
           <Route path='product'>
             <Route index element={<Product product={products} cate={category} onRemoveProduct={handleRemoveProduct} />} />
             <Route path='add' element={<ProductAdd onAddProduct={handleAddProduct} />} />
+            <Route path=':id/edit' element={<ProductEdit onEditProduct={handleEditProduct} />} />
           </Route>
 
         </Route>

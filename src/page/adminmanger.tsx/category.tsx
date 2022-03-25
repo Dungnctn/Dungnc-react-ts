@@ -13,8 +13,9 @@ type CategoryProps = {
 const Category = ({ category, onRemove }: CategoryProps) => {
   return (
     <div>
-        <NavLink to={"/admin/category/add"} className="bg-green-500">Them danh muc ++</NavLink>
-
+        <button className="btn btn-info">
+        <NavLink to={"/admin/category/add"} >Them danh muc ++</NavLink>
+        </button>
 
         <table className="table mt-10">
             <thead>
@@ -33,8 +34,11 @@ const Category = ({ category, onRemove }: CategoryProps) => {
                         <td>{item.name}</td>
                         <td>{item.createdAt}</td>
                         <td>{item.updatedAt}</td>
-                        <td><NavLink to={`${item._id}/edit`}><span className='text-green-400'>Update</span></NavLink></td>
-                        <td><button className='text-red-400 text-base' type='button' onClick={() => onRemove(item._id)} >Delete</button></td>
+                        <td><button className="btn btn-success text-sm">
+                                <NavLink to={`${item._id}/edit`}><span className='text-green-400'>Update</span></NavLink>
+                            </button>    
+                        </td>
+                        <td><button className="btn btn-danger text-sm" onClick={() => onRemove(item._id)}>Delete</button></td>
                     </tr>
                 )}
             </tbody>

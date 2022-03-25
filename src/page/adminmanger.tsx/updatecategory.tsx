@@ -26,7 +26,6 @@ const UpdateCategory = (props: UpdateCategoryProps) => {
     }, [])
 
     const onUpdate: SubmitHandler<FormInput> = ( data:any ) => {
-        console.log(data);
         props.onEdit(data);
         navigate("/admin/category");
     }
@@ -39,7 +38,7 @@ const UpdateCategory = (props: UpdateCategoryProps) => {
                     <input type="text" {...register("name")}  className="form-control"/>
                     {/* { errors.name && <span>Khong duoc bo trong</span> } */}
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button className="btn btn-primary">Submit</button>
             </form>
     </div>
   )
