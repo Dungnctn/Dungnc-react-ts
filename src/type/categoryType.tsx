@@ -1,6 +1,6 @@
 export type cateDetailType = {
     _id?: number,
-    name: String,
+    name: string,
     createdAt: Date,
     updatedAt: Date
 }

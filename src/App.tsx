@@ -1,22 +1,23 @@
-import './App.css'
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import './App.css';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import HomePage from './page/home'
-import ProductPage from './page/product'
-import Info from './page/info'
-import Signup from './page/signup'
-import Signin from './page/signin'
-import WebsitePage from './page/layouts/websitepage'
-import AdminPage from './page/layouts/adminpage'
-import DetailPage from './page/detailPage'
-import Category from './page/adminmanger.tsx/category'
-import AddCategory from './page/adminmanger.tsx/addcategory'
-import UpdateCategory from './page/adminmanger.tsx/updatecategory'
+import ProductPage from './page/product';
+import Info from './page/info';
+import Signup from './page/signup';
+import Signin from './page/signin';
+import WebsitePage from './page/layouts/websitepage';
+import AdminPage from './page/layouts/adminpage';
+import DetailPage from './page/detailPage';
+import Category from './page/adminmanger.tsx/category';
+import AddCategory from './page/adminmanger.tsx/addcategory';
+import UpdateCategory from './page/adminmanger.tsx/updatecategory';
 import { add, get, getAll, remove, update } from './api/category';
-import {getAll} from './api/product'
-import { useEffect, useState } from 'react'
-import { cateDetailType } from './type/categoryType'
-import Product from './page/adminmanger.tsx/product'
-import { productDetailType } from './type/productType'
+import {getAllProduct, removeProduct } from './api/product';
+import { useEffect, useState } from 'react';
+import { cateDetailType } from './type/categoryType';
+import Product from './page/adminmanger.tsx/product';
+import { productDetailType } from './type/productType';
+import PrivateRouter from "./components/PrivateRouter"
 
 function App() {
   const [category, setCategory] = useState<cateDetailType[]>([]);
@@ -32,8 +33,8 @@ function App() {
 
   useEffect(() => {
     const getProduct = async () => {
-      const {data} = await getAll();
-      setCategory(data);
+      const {data} = await getAllProduct();
+      setProducts(data);
     }
     getProduct()
   }, [])
@@ -57,6 +58,14 @@ function App() {
     setCategory(category.map(item => data._id == item._id ? data : item ))
   }
 
+  const handleRemoveProduct = async (id: number) => {
+    const alert = window.confirm("Ban co muon xoa san pham");
+    if(alert){
+      await removeProduct(id);
+      setProducts(products.filter(item => item._id !== id));
+    }
+  }
+
   return (
   <div className='container'>
     <main>
@@ -73,13 +82,12 @@ function App() {
           <Route path='blog' element={<Info />} />
         </Route>
 
-    <Route path='pro' element={<ProductPage />} />
-
+        <Route path='pro' element={<ProductPage />} />
         <Route path='signin' element={<Signin />} />
         <Route path='signup' element={<Signup />} ></Route>
 
 
-        <Route path='admin' element={<AdminPage />} >
+        <Route path='admin' element={<PrivateRouter><AdminPage /></PrivateRouter>} >
           <Route index element={<Navigate to='dashboard' />} />
           <Route path='dashboard' element={<h2>Dashboard</h2>} />
           <Route path='category'>
@@ -89,7 +97,7 @@ function App() {
           </Route>
 
           <Route path='product'>
-            <Route index element={<Product products={product} />} />
+            <Route index element={<Product product={products} cate={category} onRemoveProduct={handleRemoveProduct} />} />
           </Route>
 
         </Route>

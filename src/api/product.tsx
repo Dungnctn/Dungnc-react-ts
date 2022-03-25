@@ -1,27 +1,27 @@
 import { productDetailType } from "../type/productType";
 import instance from "./instance";
 
-export const getAll = () => {
+export const getAllProduct = () => {
     const url = `/products`;
     return instance.get(url)
 }
 
-export const get = (id:number) => {
+export const getProduct = (id:number) => {
     const url = `/product/${id}`;
     return instance.get(url)
 }
 
-export const remove = (id:number) => {
+export const removeProduct = (id:number) => {
     const url = `/product/${id}`;
     return instance.delete(url)
 }
 
-export const add = (product: productDetailType) => {
+export const addProduct = (product: productDetailType) => {
     const url = `/product`
     return instance.post(url, product)
 }
 
-export const update = (product: productDetailType) => {
+export const updateProduct = (product: productDetailType) => {
     const url = `/product/${product._id}`;
     return instance.put(url, product)
 }
