@@ -22,7 +22,7 @@ type ProductProps = {
 
 const Product = ({product, cate, onRemoveProduct}: ProductProps) => {
     // const [cate, setCate ] = useState(category);
-    console.log(cate);
+    // console.log(cate);
     
     // setCate(cate.map(it => it  ));
     // console.log(cate);

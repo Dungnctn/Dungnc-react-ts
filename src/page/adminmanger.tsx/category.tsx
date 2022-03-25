@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom';
 import { getAll, remove } from '../../api/category';
 import { cateDetailType } from '../../type/categoryType';
+import { Table, Space } from 'antd';
 
 type CategoryProps = {
     category: cateDetailType[],
@@ -10,10 +11,11 @@ type CategoryProps = {
 }
 
 const Category = ({ category, onRemove }: CategoryProps) => {
-    
   return (
     <div>
         <NavLink to={"/admin/category/add"} className="bg-green-500">Them danh muc ++</NavLink>
+
+
         <table className="table mt-10">
             <thead>
                 <tr>

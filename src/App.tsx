@@ -17,7 +17,9 @@ import { useEffect, useState } from 'react';
 import { cateDetailType } from './type/categoryType';
 import Product from './page/adminmanger.tsx/product';
 import { productDetailType } from './type/productType';
+import { addProduct } from './api/product';
 import PrivateRouter from "./components/PrivateRouter"
+import ProductAdd from './page/adminmanger.tsx/ProductAdd';
 
 function App() {
   const [category, setCategory] = useState<cateDetailType[]>([]);
@@ -66,6 +68,11 @@ function App() {
     }
   }
 
+  const handleAddProduct = async (product: any) => {
+    const {data} = await addProduct(product)
+    setProducts([...products, data])
+  }
+
   return (
   <div className='container'>
     <main>
@@ -98,6 +105,7 @@ function App() {
 
           <Route path='product'>
             <Route index element={<Product product={products} cate={category} onRemoveProduct={handleRemoveProduct} />} />
+            <Route path='add' element={<ProductAdd onAddProduct={handleAddProduct} />} />
           </Route>
 
         </Route>
