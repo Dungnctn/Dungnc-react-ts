@@ -13,10 +13,10 @@ const Signin = (props: Props) => {
     const navigate = useNavigate()
 
     const onSubmit: SubmitHandler<FormInput> = async (formdata: any) => {
-        const {data: user} = await signin(formdata);
+        const {data} = await signin(formdata);
         
-        localStorage.setItem("user", JSON.stringify(user.user))
-        navigate("/");
+        localStorage.setItem("user", JSON.stringify(data))
+        navigate("/admin");
     }
 
   return (

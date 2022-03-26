@@ -22,11 +22,12 @@ import { signin } from './api/user';
 import PrivateRouter from "./components/PrivateRouter"
 import ProductAdd from './page/adminmanger.tsx/ProductAdd';
 import ProductEdit from './page/adminmanger.tsx/ProductEdit';
+import { isAuthenticate } from './utils/localstorage';
 
 function App() {
   const [category, setCategory] = useState<cateDetailType[]>([]);
   const [products, setProducts] = useState<productDetailType[]>([]);
-
+  
   useEffect(() => {
     const getCategory = async () => {
       const {data} = await getAll();
@@ -70,13 +71,16 @@ function App() {
     }
   }
 
-  const handleAddProduct = async (product: any) => {
-    const {data} = await addProduct(product)
-    setProducts([...products, data])
+  const handleAddProduct = async (product: any, user:any, token:any) => {
+      const {data} = await addProduct(product,user,token)
+      setProducts([...products, data])
   }
 
   const handleEditProduct = async (product: any) => {
-    const {data} = await updateProduct(product)
+    const {data} = await updateProduct(product);
+    // console.log(data._id);
+    // console.log(products.map(i => i._id == data._id ? data : 'sai' ));
+    
     setProducts(products.map(item => item._id == data._id ? data : item))
   }
 

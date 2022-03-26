@@ -5,6 +5,7 @@ import {addProduct} from '../../api/product'
 import { useNavigate } from 'react-router-dom'
 import { getAll } from '../../api/category'
 import { cateDetailType } from '../../type/categoryType'
+import { isAuthenticate } from '../../utils/localstorage'
 type ProductAddProps = {
     onAddProduct: (product: productDetailType) => void
 }
@@ -27,8 +28,10 @@ const ProductAdd = (props: ProductAddProps) => {
         getCate()
     }, [])
 
+    const {user, token} = isAuthenticate()
+
     const onSubmit: SubmitHandler<FormInput> = (data:any) => {
-        props.onAddProduct(data);
+        props.onAddProduct(data, user, token);
         navigate("/admin/product")
     }
   return (

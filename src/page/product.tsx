@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {productType} from "../type/productType";
+import {productDetailType} from "../type/productType";
 import { NavLink } from "react-router-dom";
 
 type Props = {}
@@ -8,16 +8,14 @@ type Props = {}
 
 const ProductPage = (props: Props) => {
 
-    const [products, setProducts] = useState<productType>();
+    const [product, setProduct] = useState<productDetailType[]>([]);
     useEffect(() => {
         const getProducts = async () => {
             const response = await axios.get('http://localhost:3001/api/products');
-            setProducts(response.data);
+            setProduct(response.data);
         }
         getProducts()
     }, [])
-
-console.log(products);
 
     return (
         
@@ -25,8 +23,8 @@ console.log(products);
             <div className="bg-white">
                 <div className="max-w-2xl mx-auto py-5 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                     <div className="grid grid-cols-4 gap-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                        {products?.map((post, index) => 
-                            <NavLink to={'/productdetail/'+post._id} className="group" key={post._id}>
+                        {product?.map((post:any, index:number) => 
+                            <NavLink to={'/productdetail/'+post._id} className="group" key={index}>
                                 <div className="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmycHCBSM7FcnhY1_KwLWcSadGnkq_4k_1Yx_yOB1o_pbQ1y4eEHXliO9N8d7WXAlNGk&usqp=CAU" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="w-full h-full object-center object-cover group-hover:opacity-75" />
                                 </div>

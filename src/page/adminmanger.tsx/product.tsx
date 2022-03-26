@@ -10,22 +10,8 @@ type ProductProps = {
     onRemoveProduct: (id: number) => void
 }
 
-//     const [cate, setCate ] = useState();
-//     useEffect(() => {
-//         const getCate = async () => {
-//             const {data} = await getAll()
-//             setCate(data)
-//         }
-//         getCate()
-//     }, [])
-// console.log(cate);
 
 const Product = ({product, cate, onRemoveProduct}: ProductProps) => {
-    // const [cate, setCate ] = useState(category);
-    // console.log(cate);
-    
-    // setCate(cate.map(it => it  ));
-    // console.log(cate);
     
   return (
     <div>
