@@ -1,9 +1,24 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { signin } from '../api/user'
 
 type Props = {}
-
+type FormInput = {
+    email: string,
+    password: string
+}
 const Signin = (props: Props) => {
+    const {register, handleSubmit} = useForm<FormInput>()
+    const navigate = useNavigate()
+
+    const onSubmit: SubmitHandler<FormInput> = async (formdata: any) => {
+        const {data: user} = await signin(formdata);
+        
+        localStorage.setItem("user", JSON.stringify(user.user))
+        navigate("/");
+    }
+
   return (
     <div>
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -16,16 +31,16 @@ const Signin = (props: Props) => {
                         Đăng Nhập
                         </h2>
                     </div>
-                    <form className="mt-8 space-y-6" id="form-signup" >
+                    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)} >
                         <input type="hidden" name="remember" value="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label className="sr-only">Email address</label>
-                            <input id="email-address" name="email" type="email"required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email"/>
+                            <input id="email-address" {...register("email")} type="email"required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email"/>
                         </div>
                         <div>
                             <label className="sr-only">Password</label>
-                            <input id="password" name="password" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mật khẩu"/>
+                            <input id="password" {...register("password")} type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mật khẩu"/>
                         </div>
                         </div>
                 

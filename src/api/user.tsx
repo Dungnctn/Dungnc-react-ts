@@ -1,8 +1,8 @@
 import instance from "./instance"
 
-export const signup = () => {
+export const signup = (data: void) => {
     const url = `/signup`
-    return instance.post(url)
+    return instance.post(url, data)
 }
 
 export const signin = (data: void) => {

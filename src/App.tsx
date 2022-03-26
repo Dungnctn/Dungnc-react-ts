@@ -18,6 +18,7 @@ import { cateDetailType } from './type/categoryType';
 import Product from './page/adminmanger.tsx/product';
 import { productDetailType } from './type/productType';
 import { addProduct } from './api/product';
+import { signin } from './api/user';
 import PrivateRouter from "./components/PrivateRouter"
 import ProductAdd from './page/adminmanger.tsx/ProductAdd';
 import ProductEdit from './page/adminmanger.tsx/ProductEdit';
@@ -58,7 +59,7 @@ function App() {
   const onHanldeEdit = async (cate: any) => {
     const {data} = await update(cate);
     
-    setCategory(category.map(ite => data._id == ite._id ? data : ite ))
+    setCategory(category.map(item => data._id == item._id ? data : item ))
   }
 
   const handleRemoveProduct = async (id: number) => {

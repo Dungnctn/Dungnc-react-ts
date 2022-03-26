@@ -1,13 +1,27 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Navigate, NavLink, Route } from 'react-router-dom'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Navigate, NavLink, Route, useNavigate } from 'react-router-dom'
+import { signup } from '../api/user'
 import Header from '../components/header'
 import HomePage from './home'
 
 type Props = {}
-
+type FormInput = {
+    username: string,
+    email: string,
+    password: string,
+    role: number
+}
 const Signup = (props: Props) => {
 
+    const {register, handleSubmit} = useForm<FormInput>()
+    const navigate = useNavigate();
+    
+    const onsubmit: SubmitHandler<FormInput> = async (data: any) => {
+        await signup(data)
+        navigate("/signin");
+    }
     
 
   return (
@@ -22,21 +36,22 @@ const Signup = (props: Props) => {
                         Đăng ký tài khoản
                         </h2>
                     </div>
-                    <form className="mt-8 space-y-6" method='post'>
+                    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onsubmit)}>
                         <input type="hidden" name="remember" value="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label className="sr-only">Username</label>
-                            <input id="user" name="user" type="text" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username"/>
+                            <input id="user" type="text" {...register("username")} required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username"/>
                         </div>
                         <div>
                             <label className="sr-only">Email address</label>
-                            <input id="email-address" name="email" type="email"required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email"/>
+                            <input id="email-address" {...register("email")} type="email"required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email"/>
                         </div>
                         <div>
                             <label className="sr-only">Password</label>
-                            <input id="password" name="password" type="password"  required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mật khẩu"/>
+                            <input id="password" {...register("password")} type="password"  required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mật khẩu"/>
                         </div>
+                        <input type="hidden" {...register("role")} />
                         </div>
                 
                         <div className="flex items-center justify-between">
