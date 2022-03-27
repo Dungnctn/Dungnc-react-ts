@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { getAll } from '../../api/category';
-import { cateDetailType } from '../../type/categoryType';
 import { productDetailType } from '../../type/productType'
+import { isAuthenticate } from '../../utils/localstorage';
 
 type ProductProps = {
     product: productDetailType[];
-    cate: cateDetailType[];
-    onRemoveProduct: (id: number) => void
+    onRemoveProduct: (id: number, user: any, token: any) => void
 }
 
 
-const Product = ({product, cate, onRemoveProduct}: ProductProps) => {
-    
+const Product = ({product, onRemoveProduct}: ProductProps) => {
+    const {user, token } = isAuthenticate()
   return (
     <div>
         <button className="btn btn-info">
@@ -43,7 +40,7 @@ const Product = ({product, cate, onRemoveProduct}: ProductProps) => {
                                 <NavLink to={`${item._id}/edit`} className={'text-green-400'}>Update</NavLink>
                             </button>
                         </td>
-                        <td><button className="btn btn-danger text-sm" onClick={() => onRemoveProduct(item._id)}>Delete</button></td>
+                        <td><button className="btn btn-danger text-sm" onClick={() => onRemoveProduct(item._id,user,token)}>Delete</button></td>
                     </tr>
                     
                 )}

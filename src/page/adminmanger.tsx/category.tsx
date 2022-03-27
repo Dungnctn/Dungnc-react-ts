@@ -4,17 +4,19 @@ import { NavLink, useParams } from 'react-router-dom';
 import { getAll, remove } from '../../api/category';
 import { cateDetailType } from '../../type/categoryType';
 import { Table, Space } from 'antd';
+import { isAuthenticate } from '../../utils/localstorage';
 
 type CategoryProps = {
     category: cateDetailType[],
-    onRemove: (id: number) => void
+    onRemove: (id: number, user: any, token: any) => void
 }
 
 const Category = ({ category, onRemove }: CategoryProps) => {
+    const {user, token} = isAuthenticate()
   return (
     <div>
         <button className="btn btn-info">
-        <NavLink to={"/admin/category/add"} >Them danh muc ++</NavLink>
+        <NavLink to={"/admin/category/add"} >Add Category ++</NavLink>
         </button>
 
         <table className="table mt-10">
@@ -38,7 +40,7 @@ const Category = ({ category, onRemove }: CategoryProps) => {
                                 <NavLink to={`${item._id}/edit`}><span className='text-green-400'>Update</span></NavLink>
                             </button>    
                         </td>
-                        <td><button className="btn btn-danger text-sm" onClick={() => onRemove(item._id)}>Delete</button></td>
+                        <td><button className="btn btn-danger text-sm" onClick={() => onRemove(item._id, user, token)}>Delete</button></td>
                     </tr>
                 )}
             </tbody>

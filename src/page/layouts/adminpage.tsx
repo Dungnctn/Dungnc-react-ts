@@ -18,7 +18,7 @@ const AdminPage = (props: Props) => {
                     <NavLink to="" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Thống kê</NavLink>
                     <NavLink to="product" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sản phẩm</NavLink>
                     <NavLink to="category" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Danh mục</NavLink>
-                    <NavLink to="" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tin tức</NavLink>
+                    <NavLink to="user" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tài khoản</NavLink>
                     </div>
                 </div>
                 </div>

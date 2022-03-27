@@ -18,20 +18,18 @@ import { cateDetailType } from './type/categoryType';
 import Product from './page/adminmanger.tsx/product';
 import { productDetailType } from './type/productType';
 import { addProduct } from './api/product';
-import { signin } from './api/user';
 import PrivateRouter from "./components/PrivateRouter"
 import ProductAdd from './page/adminmanger.tsx/ProductAdd';
 import ProductEdit from './page/adminmanger.tsx/ProductEdit';
-import { isAuthenticate } from './utils/localstorage';
 
 function App() {
-  const [category, setCategory] = useState<cateDetailType[]>([]);
+  const [categories, setCategories] = useState<cateDetailType[]>([]);
   const [products, setProducts] = useState<productDetailType[]>([]);
   
   useEffect(() => {
     const getCategory = async () => {
       const {data} = await getAll();
-      setCategory(data);
+      setCategories(data);
     }
     getCategory()
   }, [])
@@ -44,29 +42,29 @@ function App() {
     getProduct()
   }, [])
 
-  const handleRemove= async (id: number) => {
+  const handleRemove= async (id: number, user: any, token: any) => {
     const alert = window.confirm("Ban co muon xoa danh muc");
     if(alert){
-      await remove(id)
-      setCategory(category.filter(item => item._id !== id))
+      await remove(id, user, token)
+      setCategories(categories.filter(item => item._id !== id))
     }
   }
 
-  const onHanldeAdd = async (cate: any) => {
-    const {data} = await add(cate)
-    setCategory([...category, data])
+  const onHanldeAdd = async (cate: any, user:any, token:any) => {
+    const {data} = await add(cate, user, token)
+    setCategories([...categories, data])
   }
 
-  const onHanldeEdit = async (cate: any) => {
-    const {data} = await update(cate);
+  const onHanldeEdit = async (cate: cateDetailType, user:any, token:any) => {
+    const {data} = await update(cate,user, token);
     
-    setCategory(category.map(item => data._id == item._id ? data : item ))
+    setCategories(categories.map(item => item._id === data._id ? data : item ))
   }
 
-  const handleRemoveProduct = async (id: number) => {
+  const handleRemoveProduct = async (id: number, user: any, token: any) => {
     const alert = window.confirm("Ban co muon xoa san pham");
     if(alert){
-      await removeProduct(id);
+      await removeProduct(id, user, token);
       setProducts(products.filter(item => item._id !== id));
     }
   }
@@ -76,8 +74,8 @@ function App() {
       setProducts([...products, data])
   }
 
-  const handleEditProduct = async (product: any) => {
-    const {data} = await updateProduct(product);
+  const handleEditProduct = async (product: any, user: any, token: any) => {
+    const {data} = await updateProduct(product, user, token);
     // console.log(data._id);
     // console.log(products.map(i => i._id == data._id ? data : 'sai' ));
     
@@ -109,13 +107,13 @@ function App() {
           <Route index element={<Navigate to='dashboard' />} />
           <Route path='dashboard' element={<h2>Dashboard</h2>} />
           <Route path='category'>
-            <Route index  element={<Category category={category} onRemove={handleRemove} /> }/>
+            <Route index  element={<Category category={categories} onRemove={handleRemove} /> }/>
             <Route path=':id/edit' element={<UpdateCategory onEdit={onHanldeEdit} />} />
             <Route path='add' element={<AddCategory onAdd={onHanldeAdd} />} />
           </Route>
 
           <Route path='product'>
-            <Route index element={<Product product={products} cate={category} onRemoveProduct={handleRemoveProduct} />} />
+            <Route index element={<Product product={products} onRemoveProduct={handleRemoveProduct} />} />
             <Route path='add' element={<ProductAdd onAddProduct={handleAddProduct} />} />
             <Route path=':id/edit' element={<ProductEdit onEditProduct={handleEditProduct} />} />
           </Route>

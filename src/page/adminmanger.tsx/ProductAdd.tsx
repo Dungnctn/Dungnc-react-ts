@@ -7,7 +7,7 @@ import { getAll } from '../../api/category'
 import { cateDetailType } from '../../type/categoryType'
 import { isAuthenticate } from '../../utils/localstorage'
 type ProductAddProps = {
-    onAddProduct: (product: productDetailType) => void
+    onAddProduct: (product: productDetailType, user: any, token: any) => void
 }
 type FormInput = {
     name: string, 

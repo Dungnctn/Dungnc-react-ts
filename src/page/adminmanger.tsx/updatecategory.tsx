@@ -4,9 +4,10 @@ import { appendErrors, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom'
 import { get } from '../../api/category';
 import { cateDetailType } from '../../type/categoryType';
+import { isAuthenticate } from '../../utils/localstorage';
 
 type UpdateCategoryProps = {
-    onEdit: (category: cateDetailType) => void
+    onEdit: (category: cateDetailType, user: any, token: any) => void
 }
 type FormInput = {
     name: string
@@ -24,9 +25,9 @@ const UpdateCategory = (props: UpdateCategoryProps) => {
         }
         getCategory()
     }, [])
-
+    const {user, token} = isAuthenticate()
     const onUpdate: SubmitHandler<FormInput> = ( data:any ) => {
-        props.onEdit(data);
+        props.onEdit(data, user, token);
         navigate("/admin/category");
     }
 

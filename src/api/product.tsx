@@ -13,9 +13,13 @@ export const getProduct = (id:number) => {
     return instance.get(url)
 }
 
-export const removeProduct = (id:number) => {
-    const url = `/product/${id}`;
-    return instance.delete(url)
+export const removeProduct = (id:number, user: any, token: any) => {
+    const url = `/product/${id}/${user._id}`;
+    return instance.delete(url, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
 }
 
 export const addProduct = (product: productDetailType, user:any, token:any) => {
@@ -28,7 +32,11 @@ export const addProduct = (product: productDetailType, user:any, token:any) => {
     })
 }
 
-export const updateProduct = (product: productDetailType) => {
-    const url = `/product/${product._id}`;
-    return instance.put(url, product)
+export const updateProduct = (product: productDetailType, user: any, token: any) => {
+    const url = `/product/${product._id}/${user._id}`;
+    return instance.put(url, product, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
 }

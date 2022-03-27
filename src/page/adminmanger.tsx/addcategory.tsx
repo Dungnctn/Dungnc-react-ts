@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { add } from '../../api/category';
 import {useForm, SubmitHandler} from "react-hook-form"
 import {cateDetailType} from "../../type/categoryType"
+import { isAuthenticate } from '../../utils/localstorage';
 
 type categoryProps = {
-    onAdd: (category: cateDetailType) => void
+    onAdd: (category: cateDetailType, user:any, token: any) => void
 }
 type FormInput = {
     name: string
@@ -15,9 +16,9 @@ type FormInput = {
 const AddCategory = (props: categoryProps) => {
     const { register, handleSubmit } = useForm<FormInput>()
     const navigate = useNavigate();
-
+    const {user, token} = isAuthenticate()
     const onSubmit: SubmitHandler<FormInput> = (data: any) => {
-        props.onAdd(data);
+        props.onAdd(data, user, token);
         navigate('/admin/category');
     }
 
