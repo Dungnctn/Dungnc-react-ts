@@ -6,6 +6,16 @@ export const signup = (data: void) => {
 }
 
 export const signin = (data: void) => {
-    const url = `signin`
+    const url = `/signin`
     return instance.post(url, data)
+}
+
+export const getAllUser = () => {
+    const url = `/listuser`
+    return instance.get(url)
+}
+
+export const getUser = (id: number) => {
+    const url = `/user/${id}`
+    return instance.get(url)
 }

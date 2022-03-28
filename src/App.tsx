@@ -21,6 +21,7 @@ import { addProduct } from './api/product';
 import PrivateRouter from "./components/PrivateRouter"
 import ProductAdd from './page/adminmanger.tsx/ProductAdd';
 import ProductEdit from './page/adminmanger.tsx/ProductEdit';
+import UserManager from './page/adminmanger.tsx/UserManager';
 
 function App() {
   const [categories, setCategories] = useState<cateDetailType[]>([]);
@@ -116,6 +117,10 @@ function App() {
             <Route index element={<Product product={products} onRemoveProduct={handleRemoveProduct} />} />
             <Route path='add' element={<ProductAdd onAddProduct={handleAddProduct} />} />
             <Route path=':id/edit' element={<ProductEdit onEditProduct={handleEditProduct} />} />
+          </Route>
+
+          <Route path='user' >
+            <Route index element={<PrivateRouter><UserManager /></PrivateRouter>} />
           </Route>
 
         </Route>
