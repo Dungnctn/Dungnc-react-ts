@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom';
 import { getAll, remove } from '../../api/category';
 import { cateDetailType } from '../../type/categoryType';
-import { Table, Space } from 'antd';
+import { Table, Space, Button } from 'antd';
 import { isAuthenticate } from '../../utils/localstorage';
+import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 
 type CategoryProps = {
     category: cateDetailType[],
@@ -13,13 +14,62 @@ type CategoryProps = {
 
 const Category = ({ category, onRemove }: CategoryProps) => {
     const {user, token} = isAuthenticate()
+    const colums = [
+        {
+            title: '#',
+            dataIndex: 'key',
+            width: 50,
+          },
+          {
+            title: 'Name',
+            dataIndex: 'name',
+            width: 150,
+          },
+          {
+            title: 'CreateAt',
+            dataIndex: 'createAt',
+            width: 150,
+          },
+          {
+            title: 'Update',
+            dataIndex: 'update',
+            width: 150
+          },
+          {
+            title: 'Remove',
+            dataIndex: 'remove',
+            width: 100
+          }
+    ]
+    const dataSource = category.map((item, index) => {
+        return {
+            key: index + 1,
+            name: item.name,
+            createAt: item.createdAt,
+            update: <NavLink to={`${item._id}/edit`}><Button type="primary" shape="round" icon={<DownloadOutlined />}> Update </Button></NavLink>,
+            remove: <Button type="primary"  onClick={() => onRemove(item._id, user, token)} danger shape="round" icon={<DeleteOutlined />} > Remove </Button>
+            
+            
+            // <Button danger onClick={() => onRemove(item._id, user, token)}>Remove</Button>
+        }
+    })
   return (
     <div>
         <button className="btn btn-info">
-        <NavLink to={"/admin/category/add"} >Add Category ++</NavLink>
+            <NavLink to={"/admin/category/add"} className='text-[#fff]'>Add Category ++</NavLink>
         </button>
 
-        <table className="table mt-10">
+        <Table columns={colums} dataSource={dataSource} />
+    </div>
+  )
+}
+
+export default Category
+
+
+
+/**
+ * <table className="table mt-10">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -45,8 +95,5 @@ const Category = ({ category, onRemove }: CategoryProps) => {
                 )}
             </tbody>
         </table>
-    </div>
-  )
-}
-
-export default Category
+ * 
+ */

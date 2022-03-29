@@ -114,7 +114,7 @@ function App() {
           </Route>
 
           <Route path='product'>
-            <Route index element={<Product product={products} onRemoveProduct={handleRemoveProduct} />} />
+            <Route index element={<Product product={products} cate={categories} onRemoveProduct={handleRemoveProduct} />} />
             <Route path='add' element={<ProductAdd onAddProduct={handleAddProduct} />} />
             <Route path=':id/edit' element={<ProductEdit onEditProduct={handleEditProduct} />} />
           </Route>

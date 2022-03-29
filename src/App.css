@@ -40,3 +40,51 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+
+.search-box input{
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  width: 0;
+  transition: all 0.5s;
+}
+.search-box input{
+  width: 140px;
+  height: 35px;
+  
+  border: none;
+  padding-left: 10px;
+  border-bottom: 1px solid black;
+}
+
+.acc {
+  display: flex;
+  align-items: center;
+}
+
+#signup::after, #username::after {
+  content: "";
+  width: 10px;
+  border-right: 5px solid #fff;
+  padding-left: 10px;
+  
+}
+
+#signin, #logout {
+  padding-left: 10px;
+}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+  [data-theme="dark"] .site-layout .site-layout-background {
+    background: #141414;
+  }
